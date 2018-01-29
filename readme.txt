@@ -7,6 +7,7 @@ bin 生产目录
 gulp default 开发模式 localhost:8080 可以调试开发
 gulp build 生产模式
 其他辅助命令暂时不列举
+涉及到项目内容已删除
 
 
 
