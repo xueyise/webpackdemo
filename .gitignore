@@ -1,0 +1,6 @@
+/.idea/
+/bin/
+/dist/
+/jc/
+/node_modules/
+*.zip
