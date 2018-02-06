@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var webpack = require('webpack-stream');
 var del = require("del");
 var connect = require('gulp-connect');
+//获取gulp-less模块
+var less = require("gulp-less");
+
 // 引入组件
 var minifycss = require('gulp-minify-css'),//css压缩
     concat = require('gulp-concat'),//文件合并
@@ -20,23 +23,27 @@ var src = {
     jspath: ["src/js/**/*.js", "src/js/*.js"],
     style: "src/css/*.css",                  // style 目录下所有 xx/index.less
     assets: "src/assets/**/*",                             // 图片等应用资源
-    statichtml: "src/statichtml/*.html"                             // 静态html（python）
+    statichtml: "src/statichtml/*.html",                             // 静态html（python）
+    less: "src/less/*.less" ,                            // 静态html（python）
+    font:"src/font/*"
 };
 
 var dist = {
     root: "dist/",
     html: "dist/",
+    font:"dist/static/font",
     style: "dist/static/css",
     js: "dist/static/js",
     vendor: "dist/static/vendor",
     assets: "dist/static/assets",
     assetsjs: "dist/static/assets/js",
-    statichtml: "dist/static/html/"                             // 静态html（python）
+    statichtml: "dist/static/html/"                           // 静态html（python）
 };
 
 var bin = {
     root: "bin/",
     html: "bin/",
+    font:"dist/static/font",
     style: "bin/static/css",
     js: "bin/static/js",
     vendor: "bin/static/vendor",
@@ -107,7 +114,16 @@ function copybuildAssets() {
     return gulp.src(src.assets)
         .pipe(gulp.dest(bin.assets));
 }
+function copyFont() {
+    return gulp.src(src.font)
+        .pipe(gulp.dest(dist.font));
+}
 
+
+function copybuildFont() {
+    return gulp.src(src.font)
+        .pipe(gulp.dest(bin.font));
+}
 // 合并、压缩js文件
 function buildjs() {
     return gulp.src('src/assets/js/*.js')
@@ -125,27 +141,27 @@ function buildjs() {
  * @param  {Function} done [description]
  * @return {[type]}        [description]
  */
-function style() {
-    return gulp.src('src/css/*.css')
-        .pipe(concat('main.css'))
-        .pipe(minifycss())
-        .pipe(rev())
-        .pipe(gulp.dest(bin.style))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(bin.style))
-        .pipe(notify({message: 'css task ok'}));
-}
-
-
-function styledev() {
-    return gulp.src('src/css/*.css')
-        .pipe(concat('main.css'))
-        .pipe(rev())
-        .pipe(gulp.dest(dist.style))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(dist.style))
-        .pipe(notify({message: 'css task ok'}));
-}
+// function style() {
+//     return gulp.src('src/css/*.css')
+//         .pipe(concat('main.css'))
+//         .pipe(minifycss())
+//         .pipe(rev())
+//         .pipe(gulp.dest(bin.style))
+//         .pipe(rev.manifest())
+//         .pipe(gulp.dest(bin.style))
+//         .pipe(notify({message: 'css task ok'}));
+// }
+//
+//
+// function styledev() {
+//     return gulp.src('src/css/*.css')
+//         .pipe(concat('main.css'))
+//         .pipe(rev())
+//         .pipe(gulp.dest(dist.style))
+//         .pipe(rev.manifest())
+//         .pipe(gulp.dest(dist.style))
+//         .pipe(notify({message: 'css task ok'}));
+// }
 
 //Html替换css、js引用文件版本
 function revHtml() {
@@ -219,7 +235,7 @@ function connectServer(done) {
 
 function watch() {
     gulp.watch("src/**/*.js",gulp.series( webpackDevelopment,revHtml));
-    gulp.watch("src/**/*.css", gulp.series( styledev,revHtml));
+    gulp.watch("src/**/*.less", gulp.series( devless,revHtml));
     gulp.watch(src.html, revHtml);
     gulp.watch("dist/**/*").on('change', function (file) {
         gulp.src('dist/')
@@ -231,11 +247,11 @@ function watch() {
  * default task
  */
 gulp.task("default", gulp.series(
-    //cleandist,
+    cleandist,
     cleanhtml,
     checkjs,
-   // copyAssets,
-    gulp.parallel(copyVendor, styledev, webpackDevelopment),
+    copyAssets,
+    gulp.parallel(copyFont,copyVendor, devless, webpackDevelopment),
     revstaticHtml,
     revHtml,
     connectServer,
@@ -250,7 +266,8 @@ gulp.task("build", gulp.series(
     checkjs,
     copybuildAssets,
     buildjs,
-    gulp.parallel(copybuildVendor, style, webpackProduction),
+    buildless,
+    gulp.parallel(copybuildFont,copybuildVendor, buildless, webpackProduction),
     revbuildHtml,
     revbuildstaticHtml,
     function (done) {
@@ -316,3 +333,28 @@ function webpackProduction() {
         .pipe(notify({message: 'projs task ok'}));
 }
 
+
+function devless() {
+    return  gulp.src(src.less)
+        .pipe(concat('main.css'))
+        .pipe(less())
+        .pipe(rev())
+        .pipe(gulp.dest(dist.style))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(dist.style))
+}
+
+function buildless() {
+    return  gulp.src(src.less)
+        .pipe(concat('main.css'))
+        .pipe(less())
+        .pipe(minifycss())
+        .pipe(rev())
+        .pipe(gulp.dest(bin.style))
+        .pipe(minifycss())
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(bin.style))
+
+}
+exports.devless = devless;
+exports.buildless = buildless;

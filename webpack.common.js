@@ -50,35 +50,29 @@ var externals = [
     }
 ];
 
-function getEntry(jspath, key) {
-    var jsPath = path.resolve(jspath, key);
-    var dirs = fs.readdirSync(jsPath);
-    var matchs = [], files = [];
-    dirs.forEach(function (item) {
-        matchs = item.match(/(.+)\.js$/);
-        // console.log(matchs);
-        if (matchs) {
-            files.push(path.resolve(jspath, key, item));
+function getEntry() {
+    var dir = path.resolve(process.cwd(), 'src/js');
+    var matchs = [], entrys = {};
+    fs.readdirSync(dir).forEach(function (filename) {
+        var path = dir + "/" + filename
+        var stat = fs.statSync(path)
+        if (stat && stat.isDirectory()) {
+            path = path + "/" + filename;
+            entrys[filename] = [path, 'js'].join('.');
         }
-    });
-    //console.log(JSON.stringify(files));
-    return files;
+        else {
+            matchs = filename.match(/(.+)\.js$/);
+            if (matchs) {
+                entrys[matchs[1]] = path;
+            }
+        }
+    })
+
+    return entrys;
 }
 
-var commonjs = getEntry(SOURCES_PATH, 'common');
-var mainjs = getEntry(SOURCES_PATH, '');
-var usersjs = getEntry(SOURCES_PATH, 'users');
-var chartsjs = getEntry(SOURCES_PATH, 'charts');
-var layerjs = getEntry(SOURCES_PATH, 'layers');
 module.exports = {
-    entry: {
-        common: commonjs,
-        main: mainjs,
-        users: usersjs,
-        charts:chartsjs,
-        layer:layerjs,
-
-    },
+    entry: getEntry(),
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common' // 指定公共 bundle 的名称。
@@ -93,7 +87,8 @@ module.exports = {
         path: path.resolve(__dirname, 'dist/static/js/'),
         libraryTarget: 'umd'
     },
-    resolve: resolve,
+    resolve: resolve
+    ,
     module: {
         loaders: [{
             test: /\.js$/,
