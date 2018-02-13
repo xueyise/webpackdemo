@@ -1,0 +1,62 @@
+.search-bar {
+  padding: 10px 15px;
+  margin: 0 0px;
+  border-bottom: 1px solid @border-color;
+  input {
+    width: auto;
+    height: 34px;
+    border-radius: 2px;
+    padding: 6px 14px;
+    outline: none;
+    vertical-align: center;
+    border: 1px solid @border-color;
+    background: transparent;
+    box-sizing: border-box;
+  }
+  button {
+    float: right;
+  }
+}
+
+.middle-bar {
+  font-size: 13px;
+  text-align: center;
+  border-bottom: 1px solid @border-color;
+}
+
+.dialog-content{
+  height: 174px;
+  overflow-y: scroll;
+
+  .content-table{
+    font-size: 13px;
+    text-align: center;
+    line-height: 15px;
+    border-collapse: collapse;
+
+    tr {
+      td{
+        border-bottom: 1px solid @border-color;
+        height: 30px;
+        text-align: center;
+      }
+      .td-index{
+        border-right: 1px solid @border-color;
+        width: 39px;
+      }
+      .td-content{
+        width: 224px;
+      }
+      .td-del{
+        width: 76px;
+      }
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    padding-top: 21%;
+    line-height: 100%;
+    overflow-y: hidden;
+  }
+}

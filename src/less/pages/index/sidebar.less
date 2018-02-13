@@ -1,0 +1,57 @@
+.side-bar-tab {
+  .middle-index;
+  position: fixed;
+  right: 0;
+  top: 10%;
+  min-width: 27px;
+  .title-bar {
+    position: absolute;
+    left: 0;
+    top: 54px;
+    width: 27px;
+    .tab-title {
+      border-radius: 4px!important;
+      display: block;
+      border: none;
+      background-color: @button-color;
+      padding: 18px 0px;
+      &:hover,&.select {
+        background-color: @button-selectedcolor;
+      }
+    }
+    .tab-title+.tab-title {
+      margin-top: 14px;
+    }
+  }
+  .sidebar-content {
+    position: relative;
+    width: 239px;
+    height: 640px;
+    margin-left: 29px;
+    .top-bar {
+      border-top-left-radius: 6px;
+      background: @background-color-grey;
+      vertical-align: middle;
+      position: relative;
+      padding: 0 15px;
+      .fix-tabs {
+        float: right;
+        cursor: pointer;
+      }
+    }
+    .main-content {
+      border-bottom-left-radius: 6px;
+      background: @background-color-grey;
+      position: relative;
+      height: 400px;
+      overflow-y: scroll;
+      .coverages-item {
+        padding: 0 30px;
+        line-height: 40px;
+        .item-list{
+          margin-top: -3px;
+        }
+      }
+    }
+  }
+}

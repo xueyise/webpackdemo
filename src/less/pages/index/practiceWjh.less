@@ -1,0 +1,93 @@
+@color: #2b2b2b;
+@shadow: #7b7b7b;
+.page-header {
+  background-color: @color;
+}
+
+#header {
+  height: 100px;
+  margin: 0 0 5px 0;
+  text-align: center;
+  box-shadow: 0 5px 5px @shadow;
+  h1 {
+    margin: 0;
+    padding: 20px;
+    color: #fff;
+  }
+  small {
+    color: #f5f5f5;
+  }
+}
+
+.lists {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#div1, #div2 {
+  width: 420px;
+  height: 287px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
+
+
+#myCarousel {
+  width: 800px;
+}
+
+ul.nav-tabs{
+  width: 140px;
+  margin-top: 20px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+  li.active{
+    a,a:hover{
+      color: #fff;
+      background: #0088cc;
+      border: 1px solid #0088cc;
+    }
+  }
+  li{
+    margin: 0;
+    border-top: 1px solid #ddd;
+    a{
+      margin: 0;
+      padding: 8px 16px;
+      border-radius: 0;
+      color: #337ab7;
+  }
+    a:hover{
+      color: #23527c;
+    }
+    a:focus{
+      color: #fff;
+      background: #0088cc;
+      border: 1px solid #0088cc;
+    }
+  }
+  li:first-child{
+     border-top: none;
+    a{
+      border-radius: 4px 4px 0 0;
+    }
+   }
+  li:last-child{
+    a{
+      border-radius: 0 0 4px 4px;
+    }
+  }
+}
+
+ul.nav-tabs.affix{
+  top: 30px; /* Set the top position of pinned element */
+}
+
+#myScrollspy{
+  ul{
+    position:fixed;
+  }
+
+}

@@ -1,0 +1,29 @@
+
+.common-dialog {
+  z-index: 700;
+  position: absolute;
+  width: 339px;
+  height: 300px;
+  background: @background-color-grey;
+  border-radius: @border-radius-large;
+
+  .top-bar {
+    background-color: @button-selectedcolor;
+    border-top-right-radius: @border-radius-large;
+    border-top-left-radius: @border-radius-large;
+    cursor: all-scroll;
+    padding: @modal-title-padding;
+    border-bottom: 1px solid @modal-header-border-color;
+    &:extend(.clearfix all);
+
+    .topbar-close {
+      float: right;
+      cursor: pointer;
+      &:hover {
+        color: @select-color;
+      }
+    }
+  }
+
+
+}

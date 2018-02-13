@@ -1,0 +1,39 @@
+//公共变量
+* {
+  color: @font-color;
+}
+& *{
+  .select-none;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-left: 5px solid @background-color-grey;
+  border-bottom: 5px solid transparent;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: @button-selectedcolor;
+  border-radius: 6px;
+}
+.select-ding {
+  display: block!important;
+}
+ul{
+  list-style: none;
+  li {
+    cursor: pointer;
+  }
+}
+//背景图片
+.background-login-img(){
+  background: url('../assets/images/bg.jpg') no-repeat top center fixed;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
